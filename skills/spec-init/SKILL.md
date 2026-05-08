@@ -1,29 +1,29 @@
 ---
 name: spec-init
-description: Use when 需要在本仓库的 AI SDLC 流程中初始化新的 Spec Pack（创建三位编号分支与 `docs/specs/{num}-{short-name}` 目录），或在执行 `spec-init` 时不确定输入解析、短名称规则、UTF-8 BOM 文件路径传参、脚本调用方式与输出物。
+description: Use when 需要在本仓库的 AI SDLC 流程中初始化新的 Spec Pack（创建三位编号分支与 `.harness/specs/{num}-{short-name}` 目录），或在执行 `spec-init` 时不确定输入解析、短名称规则、UTF-8 BOM 文件路径传参、脚本调用方式与输出物。
 ---
 
 # spec-init
 
 ## 概览
 
-`spec-init` 用于在本仓库里创建一个新的需求级 Spec Pack：自动递增三位编号、创建并切换到 `{num}-{short-name}` 分支、生成 `docs/specs/{num}-{short-name}/` 目录结构，并把原始需求写入 `requirements/raw.md`（UTF-8 with BOM）。
+`spec-init` 用于在本仓库里创建一个新的需求级 Spec Pack：自动递增三位编号、创建并切换到 `{num}-{short-name}` 分支、生成 `.harness/specs/{num}-{short-name}/` 目录结构，并把原始需求写入 `requirements/raw.md`（UTF-8 with BOM）。
 
 约束：即使仓库包含 `.gitmodules`，`spec-init` 也只初始化**根项目**的 Spec 分支与 Spec Pack；子仓分支不在本阶段批量创建。
 
 ## 何时使用 / 不使用
 
 - **使用时机**
-  - 用户要开始一个"新需求"的 Spec（还没有 `{num}-{short-name}` 分支与 `docs/specs/...` 目录）。
+  - 用户要开始一个"新需求"的 Spec（还没有 `{num}-{short-name}` 分支与 `.harness/specs/...` 目录）。
   - 用户只给了中文需求文本（不方便先手动建文件），担心参数编码导致乱码。
   - 需要确保分支命名、编号来源、目录结构符合仓库约定。
 - **不要用在**
-  - 已经在一个合法的 `{num}-{short-name}` spec 分支上，且 `docs/specs/{num}-{short-name}/` 已存在并结构完整（这时直接进入后续命令）。
+  - 已经在一个合法的 `{num}-{short-name}` spec 分支上，且 `.harness/specs/{num}-{short-name}/` 已存在并结构完整（这时直接进入后续命令）。
 
 ## 快速参考
 
 - **分支命名**：`{num}-{short-name}`（`num` 为三位数字；`short-name` 为 kebab-case，小写字母/数字/连字符）
-- **统一输出位置**：`docs/specs/{num}-{short-name}/`
+- **统一输出位置**：`.harness/specs/{num}-{short-name}/`
 - **必备子目录**：`requirements/`、`design/`、`implementation/`、`verification/`、`release/`
 - **初始文件**：`requirements/raw.md`（内容=原始需求；编码=UTF-8 with BOM）
 - **脚本位置**：`<本SKILL.md目录>/scripts/`
@@ -82,7 +82,7 @@ description: Use when 需要在本仓库的 AI SDLC 流程中初始化新的 Spe
 
 脚本职责边界：
 
-- 若当前目录位于 submodule 内，脚本应先回溯到根项目，再在根项目创建 Spec 分支与 `docs/specs/...`
+- 若当前目录位于 submodule 内，脚本应先回溯到根项目，再在根项目创建 Spec 分支与 `.harness/specs/...`
 - 不在此阶段创建 submodule 分支，也不生成额外的 repo 清单文件
 
 ### 4) 验收（DoD）
@@ -90,8 +90,8 @@ description: Use when 需要在本仓库的 AI SDLC 流程中初始化新的 Spe
 检查以下事实是否同时成立（缺一不可）：
 
 - 当前分支名（`git branch --show-current`）符合 `{num}-{short-name}`。
-- `docs/specs/<branchName>/` 存在，且包含 5 个必需子目录（`requirements/`、`design/`、`implementation/`、`verification/`、`release/`）。
-- `docs/specs/<branchName>/requirements/raw.md` 存在，内容等于原始需求（注意文件头有 UTF-8 BOM）。
+- `.harness/specs/<branchName>/` 存在，且包含 5 个必需子目录（`requirements/`、`design/`、`implementation/`、`verification/`、`release/`）。
+- `.harness/specs/<branchName>/requirements/raw.md` 存在，内容等于原始需求（注意文件头有 UTF-8 BOM）。
 - 传入的源文件已被删除（这不是 bug；若用户需要保留，应在步骤 1 之前自行备份）。
 - 若仓库包含 `.gitmodules`：本阶段不要求任何子仓已创建分支；后续应由 I1/I2 门禁处理
 
@@ -141,8 +141,8 @@ ROUTER_SUMMARY:
 
 ## 常见错误（以及怎么避免）
 
-- **自创分支/目录结构**：不要用 `spec/<slug>`、`feature/<slug>`、`features/<slug>`；本仓库规范是 `{num}-{short-name}` + `docs/specs/...`。
+- **自创分支/目录结构**：不要用 `spec/<slug>`、`feature/<slug>`、`features/<slug>`；本仓库规范是 `{num}-{short-name}` + `.harness/specs/...`。
 - **把中文需求当作命令行参数直接传递**：一律写入文件，再传路径。
 - **误以为脚本不会删源文件**：它会删除 `SourceFilePath` 指向的文件；对用户的原始文件务必先确认是否需要备份。
 - **短名称不规范**：避免大写、下划线、中文；避免前后连字符与连续 `--`；尽量 2-4 词。
-- **把 submodule 当作 Spec 根目录**：即使从子仓目录触发，也必须回到根项目创建 `docs/specs/...`
+- **把 submodule 当作 Spec 根目录**：即使从子仓目录触发，也必须回到根项目创建 `.harness/specs/...`

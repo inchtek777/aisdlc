@@ -86,8 +86,8 @@ status: draft
 
 ### 7.2 需遵守的不变量
 
-- [不变量 1]（来源：`docs/project/components/<module>.md#...`）
-- [不变量 2]（来源：`docs/project/components/<module>.md#...`）
+- [不变量 1]（来源：`.harness/project/components/<module>.md#...`）
+- [不变量 2]（来源：`.harness/project/components/<module>.md#...`）
 
 ### 7.3 跨模块影响
 

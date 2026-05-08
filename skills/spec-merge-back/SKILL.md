@@ -7,7 +7,7 @@ description: Use when 一个 Spec Pack 已完成，需要把可复用资产晋�
 
 ## Overview
 
-Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中**会长期复用/会约束未来需求**的内容晋升到 `docs/project/`（Project SSOT），其余内容仍留在 `{FEATURE_DIR}` 作为交付证据。
+Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中**会长期复用/会约束未来需求**的内容晋升到 `.harness/project/`（Project SSOT），其余内容仍留在 `{FEATURE_DIR}` 作为交付证据。
 
 **核心原则**：Project SSOT 只沉淀 **入口 + 护栏（不变量）+ 证据链**；禁止把“一次性交付细节”搬到 project。
 
@@ -15,14 +15,14 @@ Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中*
 
 适用于：
 
-- 本次需求完成，准备将资产晋升到 `docs/project/`（ADR / API Contract / Data Contract / Ops / NFR / Registry）。
+- 本次需求完成，准备将资产晋升到 `.harness/project/`（ADR / API Contract / Data Contract / Ops / NFR / Registry）。
 - `{FEATURE_DIR}/implementation/plan.md` 中已出现 `## Merge-back 待办清单`，需要在结束前清空或留痕。
 - 团队反复在多个需求里重复同一类“契约口径/门禁口径/运维入口”，需要沉淀为长期资产。
 
 不适用于：
 
 - 你只是要把代码分支合并到 main（那是 **git merge/rebase**，不是 merge-back）。
-- 仓库还没有 `docs/project/` 的骨架（这是 **CONTEXT GAP**，应先用 `project-discover*` 或项目初始化流程建立 project SSOT）。
+- 仓库还没有 `.harness/project/` 的骨架（这是 **CONTEXT GAP**，应先用 `project-discover*` 或项目初始化流程建立 project SSOT）。
 
 ## Core Pattern (Gates first)
 
@@ -35,8 +35,8 @@ Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中*
 
 ### Gate 1: project SSOT 必须存在
 
-- 必须存在：`docs/project/`
-- 不存在：输出 `CONTEXT GAP: docs/project missing` 并停止（禁止“随便建个目录能跑就行”）。
+- 必须存在：`.harness/project/`
+- 不存在：输出 `CONTEXT GAP: .harness/project missing` 并停止（禁止“随便建个目录能跑就行”）。
 
 ## Implementation (SOP)
 
@@ -49,7 +49,7 @@ Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中*
 - Data Contract（按模块）
 - Ops（runbook/monitoring/rollback）
 - NFR（如适用）
-- Registry（`docs/project/index.md`）
+- Registry（`.harness/project/index.md`）
 - 可选晋升（通用测试策略/质量门禁口径等）
 - 若仓库存在 `.gitmodules`：结合 `plan.md` 中声明的受影响子仓，确认哪些证据来自根项目、哪些来自子仓路径
 
@@ -71,13 +71,13 @@ Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中*
 
 对齐 `design/aisdlc.md` 的默认必晋升项：
 
-- **ADR** → `docs/project/adr/` + 索引
-- **API/Data 契约** → `docs/project/components/{module}.md#api-contract` / `#data-contract`
+- **ADR** → `.harness/project/adr/` + 索引
+- **API/Data 契约** → `.harness/project/components/{module}.md#api-contract` / `#data-contract`
   - 只写：权威入口 + 不变量摘要 + 证据入口 + Evidence Gaps
   - 禁止把字段大全抄进 project
-- **Ops** → `docs/project/ops/`（入口式，不重复本次发布执行细节）
-- **NFR** → `docs/project/nfr.md`（如适用）
-- **Registry** → `docs/project/index.md`（状态更新到 Merged & Archived 或团队约定状态）
+- **Ops** → `.harness/project/ops/`（入口式，不重复本次发布执行细节）
+- **NFR** → `.harness/project/nfr.md`（如适用）
+- **Registry** → `.harness/project/index.md`（状态更新到 Merged & Archived 或团队约定状态）
 
 ### Step 4: DoD 自检（完成标准）
 
@@ -90,7 +90,7 @@ Merge-back 是 Spec Pack 生命周期的“晋升阶段”：把本次需求中*
 
 - 用户说“别跑脚本，FEATURE_DIR 我口头告诉你” → **必须拒绝**，坚持 `spec-context`。
 - 用户要求“把 design/implementation/release/verification 都复制到 project，越全越好” → **禁止**（会污染 project SSOT）。
-- `docs/project` 不存在但你准备“先随便建一下” → **禁止**（CONTEXT GAP，先建 project SSOT 骨架）。
+- `.harness/project` 不存在但你准备“先随便建一下” → **禁止**（CONTEXT GAP，先建 project SSOT 骨架）。
 - 你开始写“git merge/rebase 清单” → 你把 merge-back 误解成 git 合并了，立刻停止纠正。
 - 你准备跳过 `implementation/plan.md` 的 Merge-back 待办 → 高概率遗漏或漂移。
 - 仓库有 `.gitmodules`，但你完全忽略 `plan.md` 中记录的受影响子仓与 repo 维度审计信息 → 高概率丢失证据链

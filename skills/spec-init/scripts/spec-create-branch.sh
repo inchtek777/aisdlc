@@ -8,9 +8,9 @@ usage() {
   （--source-file 与 --source-file-path 等价）
 
 行为:
-  - 计算下一个三位编号（来源：远程分支 / 本地分支 / docs/specs 目录）
+  - 计算下一个三位编号（来源：远程分支 / 本地分支 / .harness/specs 目录）
   - 创建并切换到 {num}-{short-name} 分支
-  - 创建 docs/specs/{num}-{short-name}/{requirements,design,implementation,verification,release}
+  - 创建 .harness/specs/{num}-{short-name}/{requirements,design,implementation,verification,release}
   - 写入 requirements/raw.md（UTF-8 with BOM）
   - 删除 --source-file 指向的源文件
   - 输出 REPO_ROOT/CURRENT_BRANCH/FEATURE_DIR/SPEC_NUMBER/SHORT_NAME（stdout）
@@ -136,7 +136,7 @@ find_max_number() {
 
   # 3) specs 目录
   log "正在检查 specs 目录..."
-  local specs_dir="$repo_root/docs/specs"
+  local specs_dir="$repo_root/.harness/specs"
   if [[ -d "$specs_dir" ]]; then
     local d
     for d in "$specs_dir"/*; do
@@ -271,7 +271,7 @@ log ""
 
 log "步骤 3: 创建目录结构"
 log "------------------------------------------"
-spec_dir="$repo_root/docs/specs/$branch_name"
+spec_dir="$repo_root/.harness/specs/$branch_name"
 [[ -e "$spec_dir" ]] && die "目录已存在: $spec_dir"
 log "正在创建目录结构: $spec_dir"
 mkdir -p "$spec_dir"

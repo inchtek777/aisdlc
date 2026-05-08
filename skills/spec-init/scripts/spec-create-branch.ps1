@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.0
+#Requires -Version 5.0
 # PowerShell 脚本：创建 spec 工作分支和目录
 # 功能：查找最大编号、创建分支、创建目录结构、初始化文件
 # 兼容 PowerShell 5.0（Windows PowerShell）
@@ -54,7 +54,7 @@ function Resolve-RepoRoot {
     $currentPath = Resolve-Path $StartPath
     while ($currentPath -and $currentPath.Path -ne (Split-Path $currentPath.Path -Parent)) {
       $candidate = $currentPath.Path
-      if ((Test-Path -LiteralPath (Join-Path $candidate '.aisdlc')) -and (Test-GitMarker -Path $candidate)) {
+      if ((Test-Path -LiteralPath (Join-Path $candidate 'docs')) -and (Test-GitMarker -Path $candidate)) {
         return $candidate
       }
 
@@ -74,7 +74,7 @@ function Resolve-RepoRoot {
     return $repoRoot
   }
 
-  # 使用 git 命令获取当前工作目录所属仓库根目录；若在子仓内，会继续向上找 .aisdlc 根项目
+  # 使用 git 命令获取当前工作目录所属仓库根目录；若在子仓内，会继续向上找 docs 根项目
   try {
     $repoRoot = git rev-parse --show-toplevel 2>&1
     if ($? -and $repoRoot) {
@@ -148,7 +148,7 @@ function Find-MaxNumber {
   # 3. 获取 specs 目录中的编号（匹配 {num}-{short-name} 格式，short-name 可以是任何字符）
   try {
     Write-Host "正在检查 specs 目录..."
-    $aisdlcDir = Join-Path $RepoRoot '.aisdlc'
+    $aisdlcDir = Join-Path $RepoRoot 'docs'
     $specsDir = Join-Path $aisdlcDir 'specs'
     if (Test-Path -LiteralPath $specsDir) {
       $specDirs = Get-ChildItem -LiteralPath $specsDir -Directory -ErrorAction SilentlyContinue | 
@@ -216,7 +216,7 @@ function Create-SpecDirectory {
     [string]$RepoRoot
   )
   
-  $aisdlcDir = Join-Path $RepoRoot '.aisdlc'
+  $aisdlcDir = Join-Path $RepoRoot 'docs'
   $specsDir = Join-Path $aisdlcDir 'specs'
   $specDir = Join-Path $specsDir "$Number-$ShortName"
   

@@ -1,6 +1,6 @@
 ---
 name: spec-pack-abandon
-description: Use when 需要因需求重大问题而废弃/撤销当前 Spec Pack，并且必须删除对应 `.aisdlc/specs/{branch}` 目录与本地/远程分支，同时需要在执行删除前输出删除清单并要求用户二次确认。
+description: Use when 需要因需求重大问题而废弃/撤销当前 Spec Pack，并且必须删除对应 `docs/specs/{branch}` 目录与本地/远程分支，同时需要在执行删除前输出删除清单并要求用户二次确认。
 ---
 
 # spec-pack-abandon（废弃/撤销 Spec Pack：清单 + 二次确认 + 删除分支）
@@ -15,7 +15,7 @@ description: Use when 需要因需求重大问题而废弃/撤销当前 Spec Pac
 
 - **使用时机**
   - 需求/约束出现重大问题，决定废弃当前 spec pack（不再继续澄清/设计/实现）。
-  - 你需要删除：`.aisdlc/specs/{CURRENT_BRANCH}/` 以及该 `{CURRENT_BRANCH}` 分支（本地 + 远程）。
+  - 你需要删除：`docs/specs/{CURRENT_BRANCH}/` 以及该 `{CURRENT_BRANCH}` 分支（本地 + 远程）。
 - **不要用在**
   - 你只是想“回退某个提交”或“重做需求文档”：优先用正常 git 回退/新提交，而不是删分支。
   - 当前不在 spec 分支（分支名不符合 `{num}-{short-name}`）：先切到目标 spec 分支再说；否则**停止**。

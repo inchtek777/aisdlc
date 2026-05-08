@@ -43,10 +43,10 @@ description: Use when 在 sdlc-dev 的 spec 分支上需要完成 R1（raw→sol
 - `{FEATURE_DIR}/requirements/raw.md`
 
 强制尝试读取（读不到先记为 `CONTEXT GAP`，后续写入 `solution.md/## Context Gaps`，并添加验证项）：
-- `.aisdlc/project/memory/product.md`
-- `.aisdlc/project/memory/glossary.md`
-- `.aisdlc/project/products/index.md`
-- `.aisdlc/project/components/index.md`
+- `docs/project/memory/product.md`
+- `docs/project/memory/glossary.md`
+- `docs/project/products/index.md`
+- `docs/project/components/index.md`
 
 然后在对话中维护两段清单（对话可见即可，不要求回写过程状态）：
 - **已确认结论**：已被用户裁决、可直接进入 `solution.md` 的要点

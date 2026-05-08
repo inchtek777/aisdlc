@@ -27,7 +27,7 @@ I1 的目标是把 `{FEATURE_DIR}/requirements/*` 与 `{FEATURE_DIR}/design/*` �
 立刻停止（满足其一即可）：
 
 - 未得到 `FEATURE_DIR`
-- 分支/目录不确定（你发现自己想“猜 `.harness/specs/...` 路径”）
+- 分支/目录不确定（你发现自己想“猜 `.aisdlc/specs/...` 路径”）
 - `requirements/solution.md` 与 `requirements/prd.md` 均缺失，导致目标/范围/验收口径无法追溯
 - 任何关键不确定性无法在输入中证据化（必须写入 `plan.md/## NEEDS CLARIFICATION`，并明确“阻断进入 I2”）
 

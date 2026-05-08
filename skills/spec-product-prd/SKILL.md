@@ -111,7 +111,7 @@ ROUTER_SUMMARY:
   - 必读 `solution.md`，PRD 只做“转写/规格化”，不新增决策
   - PRD 里必须有：In/Out、核心场景、AC、验证清单（Owner/截止/信号/动作）
 - **禁止**
-  - 猜路径（例如手写 `.harness/specs/...`）
+  - 猜路径（例如手写 `.aisdlc/specs/...`）
   - `solution.md` 缺失仍生成 PRD（“先写再问/先出一版”）
   - 写“待确认问题/Open Questions/待定项”列表（用验证清单表替代）
 

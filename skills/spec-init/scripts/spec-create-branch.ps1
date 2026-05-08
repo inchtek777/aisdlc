@@ -54,7 +54,7 @@ function Resolve-RepoRoot {
     $currentPath = Resolve-Path $StartPath
     while ($currentPath -and $currentPath.Path -ne (Split-Path $currentPath.Path -Parent)) {
       $candidate = $currentPath.Path
-      if ((Test-Path -LiteralPath (Join-Path $candidate '.harness')) -and (Test-GitMarker -Path $candidate)) {
+      if ((Test-Path -LiteralPath (Join-Path $candidate '.aisdlc')) -and (Test-GitMarker -Path $candidate)) {
         return $candidate
       }
 
@@ -148,7 +148,7 @@ function Find-MaxNumber {
   # 3. 获取 specs 目录中的编号（匹配 {num}-{short-name} 格式，short-name 可以是任何字符）
   try {
     Write-Host "正在检查 specs 目录..."
-    $aisdlcDir = Join-Path $RepoRoot '.harness'
+    $aisdlcDir = Join-Path $RepoRoot '.aisdlc'
     $specsDir = Join-Path $aisdlcDir 'specs'
     if (Test-Path -LiteralPath $specsDir) {
       $specDirs = Get-ChildItem -LiteralPath $specsDir -Directory -ErrorAction SilentlyContinue | 
@@ -216,7 +216,7 @@ function Create-SpecDirectory {
     [string]$RepoRoot
   )
   
-  $aisdlcDir = Join-Path $RepoRoot '.harness'
+  $aisdlcDir = Join-Path $RepoRoot '.aisdlc'
   $specsDir = Join-Path $aisdlcDir 'specs'
   $specDir = Join-Path $specsDir "$Number-$ShortName"
   
